@@ -1,0 +1,107 @@
+parameters:
+  - name: code
+    in: path
+    description: 属性項目コード
+    required: true
+    schema:
+      type: string
+
+patch:
+  summary: 商品属性項目の更新
+  description: 指定したコードの商品属性項目情報を更新します。
+  operationId: updateProductAttributeItem
+  tags:
+    - 商品
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '../../schemas/products/ProductAttributeItem.yaml'
+  responses:
+    '200':
+      description: 商品属性項目の更新に成功
+      content:
+        application/json:
+          schema:
+            $ref: '../../schemas/products/ProductAttributeItem.yaml'
+    '400':
+      description: リクエストパラメータが不正
+      content:
+        application/json:
+          schema:
+            $ref: '../../schemas/common/Error.yaml'
+    '401':
+      description: 認証エラー
+      content:
+        application/json:
+          schema:
+            $ref: '../../schemas/common/Error.yaml'
+    '403':
+      description: 権限エラー
+      content:
+        application/json:
+          schema:
+            $ref: '../../schemas/common/Error.yaml'
+    '404':
+      description: 商品属性項目が存在しない
+      content:
+        application/json:
+          schema:
+            $ref: '../../schemas/common/Error.yaml'
+    '409':
+      description: 既存データとの競合エラー
+      content:
+        application/json:
+          schema:
+            $ref: '../../schemas/common/Error.yaml'
+  security:
+    - AppAccessToken:
+        - pos.products:write
+    - UserAccessToken:
+        - pos.products:write
+
+delete:
+  summary: 商品属性項目の削除
+  description: 指定したコードの商品属性項目を削除します。商品との関連が存在する場合は削除できません。
+  operationId: deleteProductAttributeItem
+  tags:
+    - 商品
+  responses:
+    '204':
+      description: 商品属性項目の削除に成功
+    '400':
+      description: リクエストパラメータが不正
+      content:
+        application/json:
+          schema:
+            $ref: '../../schemas/common/Error.yaml'
+    '401':
+      description: 認証エラー
+      content:
+        application/json:
+          schema:
+            $ref: '../../schemas/common/Error.yaml'
+    '403':
+      description: 権限エラー
+      content:
+        application/json:
+          schema:
+            $ref: '../../schemas/common/Error.yaml'
+    '404':
+      description: 商品属性項目が存在しない
+      content:
+        application/json:
+          schema:
+            $ref: '../../schemas/common/Error.yaml'
+    '409':
+      description: 削除できない状態（他のデータから参照されているなど）
+      content:
+        application/json:
+          schema:
+            $ref: '../../schemas/common/Error.yaml'
+  security:
+    - AppAccessToken:
+        - pos.products:write
+    - UserAccessToken:
+        - pos.products:write

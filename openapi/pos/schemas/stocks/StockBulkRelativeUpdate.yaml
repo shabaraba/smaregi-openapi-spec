@@ -1,0 +1,14 @@
+type: object
+description: 在庫相対一括更新情報（増減）
+properties:
+  stocks:
+    type: array
+    description: 在庫相対更新情報の配列
+    items:
+      $ref: './StockRelativeUpdate.yaml'
+  callbackUrl:
+    type: string
+    description: コールバックURL
+required:
+  - stocks
+  - callbackUrl

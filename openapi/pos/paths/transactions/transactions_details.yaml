@@ -1,0 +1,66 @@
+get:
+  summary: 取引詳細一覧取得
+  description: 特定の取引の詳細情報（商品明細や支払明細）の一覧を取得します。
+  tags:
+    - 取引
+  parameters:
+    - name: id
+      in: path
+      required: true
+      description: 取引ID
+      schema:
+        type: integer
+        format: int64
+    - name: limit
+      in: query
+      description: 最大取得件数
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 1000
+        default: 100
+    - name: page
+      in: query
+      description: ページ番号
+      schema:
+        type: integer
+        minimum: 1
+        default: 1
+    - name: with_discounts
+      in: query
+      description: |
+        小計値引／割引、単品値引／割引の値引区分や割引区分情報を付加するか(付加する場合はall, しない場合はnone)
+      schema:
+        type: string
+        enum: ['none', 'all']
+        default: 'none'
+    - name: with_detail_product_attributes
+      in: query
+      description: 販売時の商品属性情報を付加するか(付加する場合はall, しない場合はnone)
+      schema:
+        type: string
+        enum: ['none', 'all']
+        default: 'none'
+  responses:
+    "200":
+      description: 成功時のレスポンス
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              details:
+                type: array
+                items:
+                  $ref: "../../schemas/transactions/TransactionDetail.yaml"
+    "404":
+      description: 指定された取引が見つからない
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas/common/Error.yaml"
+  security:
+    - AppAccessToken:
+        - pos.transactions:read
+    - UserAccessToken:
+        - pos.transactions:read

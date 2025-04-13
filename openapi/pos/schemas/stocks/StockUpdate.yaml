@@ -1,0 +1,27 @@
+type: object
+description: 在庫更新情報
+properties:
+  storeId:
+    type: integer
+    description: 店舗ID
+  productId:
+    type: integer
+    description: 商品ID
+  stockAmount:
+    type: number
+    format: float
+    description: 在庫数
+  stockHistory:
+    type: object
+    description: 在庫履歴情報
+    properties:
+      id:
+        type: integer
+        description: 在庫変動履歴ID
+      memo:
+        type: string
+        description: 在庫履歴メモ
+required:
+  - storeId
+  - productId
+  - stockAmount
